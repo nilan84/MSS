@@ -53,11 +53,14 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
             }
 
             Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 1);
             DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
-            Date validitidate = formatter.parse("12/29/14");
+            Date validitidate = formatter.parse(formatter.format(cal.getTime()));
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(validitidate);
             mssSignatureReqType.setValidityDate(calendar1);
+
+            Calendar calendar = Calendar.getInstance();
 
             AP_Info_type0 apInfo=new AP_Info_type0();
             URI uri=new URI(Config.getInstance().getProperty("mss.signature.service.ap.id"));
@@ -66,7 +69,7 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
             apInfo.setAP_PWD(Config.getInstance().getProperty("mss.signature.service.ap.pwd"));
             apInfo.setAP_URL(appuri);
             NCName nc=new NCName();
-            String apNo=(cal.getTime().getYear()+1900)+""+(cal.getTime().getMonth()+1)+""+cal.getTime().getDate();
+            String apNo=(calendar.getTime().getYear()+1900)+""+(calendar.getTime().getMonth()+1)+""+calendar.getTime().getDate();
             apNo="_"+""+apNo+""+signatureDao.getDalyCount("_"+apNo);
             nc.setValue(apNo);
             apInfo.setAP_TransID(nc);
@@ -115,8 +118,8 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
                 mssSignatureLog.setMsisdn(mssRequest.getMsisdnNo());
                 mssSignatureLog.setReaStatus(resId);
                 mssSignatureLog.setRespStatus(new BigInteger(Config.getInstance().getProperty("mss.signature.response.fail.status")));
-                mssSignatureLog.setReqTime(cal.getTime());
-                mssSignatureLog.setRespTime(cal.getTime());
+                mssSignatureLog.setReqTime(calendar.getTime());
+                mssSignatureLog.setRespTime(calendar.getTime());
                 mssSignatureLog.setDescription(res.getMSS_SignatureResp().getStatus().getStatusMessage());
                 signatureDao.addSignatureLog(mssSignatureLog);
                //get notify  response
@@ -161,8 +164,8 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
                  mssSignatureLog.setRespStatus(new BigInteger(Config.getInstance().getProperty("mss.signature.response.fail.status")));
                  mssSignatureLog.setReaStatus(new BigInteger(Config.getInstance().getProperty("mss.signature.response.fail.status")));
                  mssSignatureLog.setDescription(e.getMessage());
-                 mssSignatureLog.setReqTime(cal.getTime());
-                 mssSignatureLog.setRespTime(cal.getTime());
+                 mssSignatureLog.setReqTime(calendar.getTime());
+                 mssSignatureLog.setRespTime(calendar.getTime());
                  signatureDao.addSignatureLog(mssSignatureLog);
                  response.setMsisdnNo(mssRequest.getMsisdnNo());
                  response.setResponseStatus(Config.getInstance().getProperty("mss.signature.response.fail.status"));
