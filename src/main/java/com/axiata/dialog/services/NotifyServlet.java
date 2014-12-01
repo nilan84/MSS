@@ -17,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.util.Calendar;
 
 /**
  * Created by nilan on 11/28/14.
@@ -48,6 +49,7 @@ try {
    //this is only for testing Plz remove ths on live
     System.out.println("============MSSP============"+mssp);
     System.out.println("============Status=========="+statusCode);
+
     System.out.println("============Description====="+description);
     log.debug("============MSSP============"+mssp);
     log.debug("============Status=========="+statusCode);
@@ -57,7 +59,8 @@ try {
     BigInteger statusCodeBI=new BigInteger(statusCode);
     mssSignatureLog.setRespStatus(statusCodeBI);
     mssSignatureLog.setRespDescription(description);
-
+    Calendar calendar = Calendar.getInstance();
+    mssSignatureLog.setRespTime(calendar.getTime());
     signatureDao.editSignatureLog(mssSignatureLog);
 
 
