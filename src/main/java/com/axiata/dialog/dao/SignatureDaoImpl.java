@@ -39,11 +39,11 @@ public class SignatureDaoImpl implements SignatureDao {
             apTranceId = (String)MssSignatureLog[0];
          }
 
-        Query query = session.createQuery("update MssSignatureLog set respStatus = :respStatus,respDescription=:respDescription" + " where apTranceId='"+apTranceId+"'");
+        Query query = session.createQuery("update MssSignatureLog set respStatus = :respStatus,respDescription=:respDescription,respTime=:respTime" + " where apTranceId='"+apTranceId+"'");
 
         query.setParameter("respStatus",mssSignatureLog.getRespStatus());
         query.setParameter("respDescription",mssSignatureLog.getRespDescription());
-    ;
+        query.setParameter("respTime",mssSignatureLog.getRespTime());
 
         int result = query.executeUpdate();
         session.getTransaction().commit();
