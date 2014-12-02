@@ -24,16 +24,15 @@ public class Config {
         try {
             InputStream input = null;
             String filename = CarbonUtils.getCarbonConfigDirPath() + File.separator + "config.properties";
-            //String filename ="config.properties";
             input = new FileInputStream(filename);
 
             prop.load(input);
 
         } catch (IOException e) {
-            log.error("IOException :"+e.getMessage());
+            log.error("IOException :"+e);
 
         }catch(Exception e){
-            log.error("Exception :"+e.getMessage());
+            log.error("Exception :"+e);
         }
     }
 
