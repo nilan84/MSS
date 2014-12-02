@@ -70,8 +70,8 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
             apInfo.setAP_URL(appuri);
             NCName nc=new NCName();
             String apNo=(calendar.getTime().getYear()+1900)+""+(calendar.getTime().getMonth()+1)+""+calendar.getTime().getDate();
-
-            apNo="S"+apNo+""+signatureDao.getDalyCount("S"+apNo);
+            String prifix=Config.getInstance().getProperty("mss.signature.service.trans.id.prefix");
+            apNo=prifix+apNo+""+signatureDao.getDalyCount(prifix+apNo);
             nc.setValue(apNo);
             apInfo.setAP_TransID(nc);
 
