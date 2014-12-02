@@ -66,8 +66,8 @@ try {
 
       }catch(Exception ex){
 
-     log.error("NotifyServlet Exception :"+ex.getMessage());
-     ex.printStackTrace();
+     log.error("NotifyServlet Exception :"+ex);
+
 
     }
 
