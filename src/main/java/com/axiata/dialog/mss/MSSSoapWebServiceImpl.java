@@ -70,7 +70,8 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
             apInfo.setAP_URL(appuri);
             NCName nc=new NCName();
             String apNo=(calendar.getTime().getYear()+1900)+""+(calendar.getTime().getMonth()+1)+""+calendar.getTime().getDate();
-            apNo="_"+""+apNo+""+signatureDao.getDalyCount("_"+apNo);
+
+            apNo="S"+apNo+""+signatureDao.getDalyCount("S"+apNo);
             nc.setValue(apNo);
             apInfo.setAP_TransID(nc);
 
@@ -108,7 +109,7 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
             mssSignature.setMSS_SignatureReq(mssSignatureReqType);
 
              try {
-                System.out.println(mssSignature);
+
                 MSS_SignatureResponse res=stub.mSS_Signature(mssSignature);
 
                 res.getMSS_SignatureResp().getStatus().getStatusCode().getStatusCode();
@@ -140,12 +141,12 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
                              System.out.println("FutureTask output=" +futureOut);
                          }
                      } catch (InterruptedException e) {
-                         log.error("Exception :"+e.getMessage());
+                         log.error("Exception :"+e);
                      } catch (TimeoutException e) {
 
                      }catch(ExecutionException e){
 
-                         log.error("Exception :"+e.getMessage());
+                         log.error("Exception :"+e);
 
                      }
                  }
@@ -170,13 +171,13 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
                  response.setMsisdnNo(mssRequest.getMsisdnNo());
                  response.setResponseStatus(Config.getInstance().getProperty("mss.signature.response.fail.status"));
 
-                 log.error("Remote Web Service Exception :"+e.getMessage());
+                 log.error("Remote Web Service Exception :"+e);
 
              }
         }
         catch(Exception ex){
-
-            log.error("Exception :"+ex.getMessage());
+            ex.printStackTrace();
+            log.error("Exception :"+ex);
 
         }
 
@@ -185,6 +186,11 @@ public class MSSSoapWebServiceImpl implements MSSSoapWebService{
 
         return response;
     }
+
+
+
+
+
 
 
 }
